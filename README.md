@@ -6,7 +6,7 @@
   <tr>
     <td><img src="./.assets/Hammerspoon.png" alt="Hammerspoon" width="280"></td>
     <td>
-      <h2 align="center" style="margin:0;"><em>A  Hammerspoon configuration for quickly launching applications,</br> and binding them to shortcuts for fast switching.</em></h2>
+      <h2 align="center" style="margin:0;"><em>A  Hammerspoon configuration for quickly launching applications, and binding them to shortcuts for fast switching.</em></h2>
     </td>
   </tr>
 </table>
