@@ -1,7 +1,3 @@
-<!-- ![alt text](.assets/Hammerspoon.png)
-
-<p align="left" style="font-size: 1.5em;"><em>An extensible Hammerspoon configuration for quickly launching applications, and binding them to shortcuts for fast switching.</em></p> -->
-
 <table>
   <tr>
     <td><img src="./.assets/Hammerspoon.png" alt="Hammerspoon" width="280"></td>
