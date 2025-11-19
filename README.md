@@ -5,8 +5,8 @@
 <table>
   <tr>
     <td><img src="./.assets/Hammerspoon.png" alt="Hammerspoon" width="280"></td>
-    <td valign="middle" align="left">
-      <h2 style="margin:0;"><em>An extensible Hammerspoon configuration for quickly</br>launching applications,<br>and binding them to shortcuts for fast switching.</em></h2>
+    <td>
+      <h2 align="center" style="margin:0;"><em>A  Hammerspoon configuration for quickly</br>launching a set ofapplications,</br>and binding them to shortcuts for fast switching.</em></h2>
     </td>
   </tr>
 </table>
