@@ -193,7 +193,7 @@ function launchWorkspace()
             -- log("launchWorkspace: fullscreen ok → %s", appName) -- LOG
             win:setFullScreen(true)
           else
-            -- log("launchWorkspace: window not standard or missing for %s", appName) -- LOG
+            log("launchWorkspace: window not standard or missing for %s", appName) -- LOG
           end
         end)
       end)
