@@ -100,6 +100,12 @@ function bindAppHotkeys()
             launchApp(appName)
         end)
     end
+
+    -- Finder: Open Downloads folder
+    hs.hotkey.bind({"alt", "cmd"}, "l", function()
+    hs.execute('open -a Finder "$HOME/Downloads"', true)
+    end)
+
     hs.alert.show("App hotkeys re-bound", config.alertDuration)
 end
 
@@ -208,11 +214,6 @@ end)
 -- Re-bind app hotkeys
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
     bindAppHotkeys()
-end)
-
--- Finder: Open Downloads folder
-hs.hotkey.bind({"alt", "cmd"}, "L", function()
-  hs.execute('open -a Finder "$HOME/Downloads"', true)
 end)
 
 hs.alert.show("Hammerspoon configuration loaded", config.alertDuration)
