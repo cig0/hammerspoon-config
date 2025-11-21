@@ -21,7 +21,7 @@ local workspaceApps = {
   "com.microsoft.VSCode",
   "com.mitchellh.ghostty",
   "Safari",
-  "Horse",
+  -- "Horse",
   "Mail",
 }
 
