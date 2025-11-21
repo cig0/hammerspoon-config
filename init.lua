@@ -42,7 +42,7 @@ end
 
 -- Launch with bundle-aware logic.
 local function launchApp(appNameOrBundle)
-  -- log("launchApp: %s", appNameOrBundle) -- LOG
+  -- log("launchApp: %s", appNameOrBundle)  -- LOG
   if isBundleID(appNameOrBundle) then
     hs.application.launchOrFocusByBundleID(appNameOrBundle)
   else
@@ -52,13 +52,13 @@ end
 
 -- Try repeatedly to get a window (for electron apps, etc.)
 local function waitForMainWindow(appNameOrBundle, callback)
-  -- log("waitForMainWindow: start for %s", appNameOrBundle) -- LOG
+  -- log("waitForMainWindow: start for %s", appNameOrBundle)  -- LOG
   local retries = config.launch.windowRetryCount
 
   local function attempt()
     local app = resolveApp(appNameOrBundle)
     if not app then
-      -- log("waitForMainWindow: app not found (%s), retries left=%d", appNameOrBundle, retries) -- LOG
+      -- log("waitForMainWindow: app not found (%s), retries left=%d", appNameOrBundle, retries)  -- LOG
       retries = retries - 1
       if retries > 0 then
         hs.timer.doAfter(config.launch.windowRetryInterval, attempt)
@@ -68,12 +68,12 @@ local function waitForMainWindow(appNameOrBundle, callback)
 
     local win = app:mainWindow()
     if win then
-      -- log("waitForMainWindow: got main window for %s", appNameOrBundle) -- LOG
+      -- log("waitForMainWindow: got main window for %s", appNameOrBundle)  -- LOG
       callback(win)
       return
     end
 
-    -- log("waitForMainWindow: no windows yet for %s, retries left=%d", appNameOrBundle, retries) -- LOG
+    -- log("waitForMainWindow: no windows yet for %s, retries left=%d", appNameOrBundle, retries)  -- LOG
     retries = retries - 1
     if retries > 0 then
       hs.timer.doAfter(config.launch.windowRetryInterval, attempt)
@@ -117,16 +117,16 @@ bindAppHotkeys()
 
 for i, appName in ipairs(workspaceApps) do
   hs.hotkey.bind({"alt", "shift"}, tostring(i), function()
-    -- log("hotkey: alt+shift+%d → %s", i, appName) -- LOG
+    -- log("hotkey: alt+shift+%d → %s", i, appName)  -- LOG
     local front = hs.application.frontmostApplication()
     if front then
       local frontBundle = front:bundleID()
       if frontBundle and frontBundle ~= "" then
         lastApp = frontBundle
-        -- log("hotkey: saving lastApp (bundle) → %s", lastApp) -- LOG
+        -- log("hotkey: saving lastApp (bundle) → %s", lastApp)  -- LOG
       else
         lastApp = front:name()
-        -- log("hotkey: saving lastApp (name) → %s", lastApp) -- LOG
+        -- log("hotkey: saving lastApp (name) → %s", lastApp)  -- LOG
       end
     end
     launchApp(appName)
@@ -140,11 +140,11 @@ end
 hs.hotkey.bind({"alt"}, "escape", function()
   local current = hs.application.frontmostApplication()
   local bundle = current and current:bundleID()
-  -- log("alt+esc: current bundle=%s lastApp=%s", tostring(bundle), tostring(lastApp)) -- LOG
+  -- log("alt+esc: current bundle=%s lastApp=%s", tostring(bundle), tostring(lastApp))  -- LOG
 
     -- If currently in the terminal (bundle) and we have a lastApp, restore it
   if bundle == "com.mitchellh.ghostty" and lastApp then
-    -- log("alt+esc: switching back to %s", lastApp) -- LOG
+    -- log("alt+esc: switching back to %s", lastApp)  -- LOG
     if isBundleID(lastApp) then
       hs.application.launchOrFocusByBundleID(lastApp)
     else
@@ -157,15 +157,15 @@ hs.hotkey.bind({"alt"}, "escape", function()
     -- Save current as bundle ID when available (so later we can restore reliably)
   if bundle and bundle ~= "" then
     lastApp = bundle
-    -- log("alt+esc: saving lastApp (bundle) = %s", lastApp) -- LOG
+    -- log("alt+esc: saving lastApp (bundle) = %s", lastApp)  -- LOG
   else
     local name = current and current:name()
     lastApp = name
-    -- log("alt+esc: saving lastApp (name) = %s", tostring(lastApp)) -- LOG
+    -- log("alt+esc: saving lastApp (name) = %s", tostring(lastApp))  -- LOG
   end
 
   -- Switch to terminal by bundle ID (deterministic)
-  -- log("alt+esc: switching to terminal bundle=com.mitchellh.ghostty") -- LOG
+  -- log("alt+esc: switching to terminal bundle=com.mitchellh.ghostty")  -- LOG
   hs.application.launchOrFocusByBundleID("com.mitchellh.ghostty")
 end)
 
@@ -174,26 +174,26 @@ end)
 ---------------------------------------------------------------------------
 
 function launchWorkspace()
-  -- log("launchWorkspace: starting sequence")               -- LOG
+  -- log("launchWorkspace: starting sequence")  -- LOG
   local total = (#workspaceApps * config.launch.delayBetweenApps)
   hs.alert.show("Launching workspace...", total)
 
   for i, appName in ipairs(workspaceApps) do
     local delay = (i - 1) * config.launch.delayBetweenApps
-    -- log("launchWorkspace: scheduling %s at +%ds", appName, delay) -- LOG
+    -- log("launchWorkspace: scheduling %s at +%ds", appName, delay)  -- LOG
 
     hs.timer.doAfter(delay, function()
-      -- log("launchWorkspace: launching %s", appName)         -- LOG
+      -- log("launchWorkspace: launching %s", appName)  -- LOG
       launchApp(appName)
 
       hs.timer.doAfter(config.launch.delayForFullscreen, function()
-        -- log("launchWorkspace: fullscreen attempt → %s", appName) -- LOG
+        -- log("launchWorkspace: fullscreen attempt → %s", appName)  -- LOG
         waitForMainWindow(appName, function(win)
           if win and win:isStandard() then
-            -- log("launchWorkspace: fullscreen ok → %s", appName) -- LOG
+            -- log("launchWorkspace: fullscreen ok → %s", appName)  -- LOG
             win:setFullScreen(true)
           else
-            log("launchWorkspace: window not standard or missing for %s", appName) -- LOG
+            log("launchWorkspace: window not standard or missing for %s", appName)  -- LOG
           end
         end)
       end)
