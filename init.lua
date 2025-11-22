@@ -87,6 +87,8 @@ end
 -- Hotkeys for workspace apps
 ---------------------------------------------------------------------------
 
+
+
 function bindAppHotkeys()
   -- log("bindAppHotkeys: binding %d workspace apps", #workspaceApps)  -- LOG
   for i, appName in ipairs(workspaceApps) do
@@ -100,12 +102,7 @@ function bindAppHotkeys()
       launchApp(appName)
     end)
   end
-
-    -- Finder: Open Downloads folder
-  hs.hotkey.bind({"alt", "cmd"}, "l", function()
-    hs.execute('open -a Finder "$HOME/Downloads"', true)
-  end)
-
+  
   hs.alert.show("App hotkeys re-bound", config.alertDuration)
 end
 
@@ -206,14 +203,27 @@ end
 ---------------------------------------------------------------------------
 
 -- Launch workspace and bind app hotkeys
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "W", function()
+hs.hotkey.bind({"ctrl", "cmd", "alt"}, "w", function()
   launchWorkspace()
   bindAppHotkeys()
 end)
 
 -- Re-bind app hotkeys
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
+hs.hotkey.bind({"ctrl", "cmd", "alt"}, "r", function()
   bindAppHotkeys()
 end)
 
-hs.alert.show("Hammerspoon configuration loaded", config.alertDuration)
+hs.hotkey.bind({"ctrl", "cmd", "alt"}, "c", function()
+  hs.reload()  -- reload the Hammerspoon configuration
+end)
+
+-- -- Finder: Open Downloads folder
+-- hs.hotkey.bind({"alt", "cmd"}, "l", function()
+--   hs.execute('open -a Finder "$HOME/Downloads"', true)
+-- end)
+
+
+---------------------------------------------------------------------------
+-- Show confirmation alert on load
+---------------------------------------------------------------------------
+hs.alert.show("Hammerspoon configuration (re)loaded", config.alertDuration)
