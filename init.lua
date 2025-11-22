@@ -134,37 +134,37 @@ end
 -- Option+Esc toggle for terminal ↔ last app
 ---------------------------------------------------------------------------
 
--- hs.hotkey.bind({"alt"}, "escape", function()
---   local current = hs.application.frontmostApplication()
---   local bundle = current and current:bundleID()
---   -- log("alt+esc: current bundle=%s lastApp=%s", tostring(bundle), tostring(lastApp))  -- LOG
+hs.hotkey.bind({"control"}, "`", function()
+  local current = hs.application.frontmostApplication()
+  local bundle = current and current:bundleID()
+  -- log("alt+esc: current bundle=%s lastApp=%s", tostring(bundle), tostring(lastApp))  -- LOG
 
---     -- If currently in the terminal (bundle) and we have a lastApp, restore it
---   if bundle == "com.mitchellh.ghostty" and lastApp then
---     -- log("alt+esc: switching back to %s", lastApp)  -- LOG
---     if isBundleID(lastApp) then
---       hs.application.launchOrFocusByBundleID(lastApp)
---     else
---       hs.application.launchOrFocus(lastApp)
---     end
---     lastApp = nil
---     return
---   end
+    -- If currently in the terminal (bundle) and we have a lastApp, restore it
+  if bundle == "com.mitchellh.ghostty" and lastApp then
+    -- log("alt+esc: switching back to %s", lastApp)  -- LOG
+    if isBundleID(lastApp) then
+      hs.application.launchOrFocusByBundleID(lastApp)
+    else
+      hs.application.launchOrFocus(lastApp)
+    end
+    lastApp = nil
+    return
+  end
 
---     -- Save current as bundle ID when available (so later we can restore reliably)
---   if bundle and bundle ~= "" then
---     lastApp = bundle
---     -- log("alt+esc: saving lastApp (bundle) = %s", lastApp)  -- LOG
---   else
---     local name = current and current:name()
---     lastApp = name
---     -- log("alt+esc: saving lastApp (name) = %s", tostring(lastApp))  -- LOG
---   end
+    -- Save current as bundle ID when available (so later we can restore reliably)
+  if bundle and bundle ~= "" then
+    lastApp = bundle
+    -- log("alt+esc: saving lastApp (bundle) = %s", lastApp)  -- LOG
+  else
+    local name = current and current:name()
+    lastApp = name
+    -- log("alt+esc: saving lastApp (name) = %s", tostring(lastApp))  -- LOG
+  end
 
---   -- Switch to terminal by bundle ID (deterministic)
---   -- log("alt+esc: switching to terminal bundle=com.mitchellh.ghostty")  -- LOG
---   hs.application.launchOrFocusByBundleID("com.mitchellh.ghostty")
--- end)
+  -- Switch to terminal by bundle ID (deterministic)
+  -- log("alt+esc: switching to terminal bundle=com.mitchellh.ghostty")  -- LOG
+  hs.application.launchOrFocusByBundleID("com.mitchellh.ghostty")
+end)
 
 ---------------------------------------------------------------------------
 -- Sequential workspace launcher (with fullscreen + retries)
